@@ -1,8 +1,8 @@
 package DAL;
 
-public class PRJDBContext extends DBContext {
+public class LoginDBContext extends DBContext {
     // Constructor gọi constructor của DBContext
-    public PRJDBContext() {
+    public LoginDBContext() {
         super();
     }
 }

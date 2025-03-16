@@ -1,6 +1,6 @@
 package LoginController;
 
-import DAL.PRJDBContext;
+import DAL.LoginDBContext;
 import User.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
-    private PRJDBContext dbContext;
+    private LoginDBContext dbContext;
 
     @Override
     public void init() throws ServletException {    
-        dbContext = new PRJDBContext();
+        dbContext = new LoginDBContext();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
