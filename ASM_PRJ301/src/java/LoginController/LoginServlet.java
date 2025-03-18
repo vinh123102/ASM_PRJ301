@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
     private User authenticate(String username, String password) {
         System.out.println("Authenticating user: " + username + ", password: " + password);
 
-        String query = "SELECT * FROM [User] WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM [Users] WHERE username = ? AND password = ?";
         try (PreparedStatement stmt = dbContext.connection.prepareStatement(query)) {
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -53,7 +53,8 @@ public class LoginServlet extends HttpServlet {
                 return new User(
                     rs.getInt("id"),
                     rs.getString("username"),
-                    rs.getString("role")
+                    rs.getString("role"),
+                    rs.getInt("manager_id") == 0 ? null : rs.getInt("manager_id")
                 );
             } else {
                 System.out.println("No user found for username: " + username);
