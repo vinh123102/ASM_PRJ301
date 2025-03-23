@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class EmployeeDBContext {
     private DBContext dbContext;
+    private int userId;
 
     public EmployeeDBContext(DBContext dbContext) {
         this.dbContext = dbContext;
@@ -27,6 +28,7 @@ public class EmployeeDBContext {
         List<Employee> employees = new ArrayList<>();
         String query = "SELECT e.* FROM Employees e " +
                       "JOIN Users u ON e.user_id = u.id " +
+                      "LEFT JOIN Department d ON e.Department_id = d.id" +
                       "WHERE u.manager_id = ?";
         try (PreparedStatement stmt = dbContext.connection.prepareStatement(query)) {
             stmt.setInt(1, managerId);
@@ -36,7 +38,9 @@ public class EmployeeDBContext {
                     rs.getInt("id"),
                     rs.getInt("user_id"),
                     rs.getString("full_name"),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getString("Department_name"),
+                    rs.getString("position")
                 );
                 employees.add(employee);
             }
@@ -45,5 +49,29 @@ public class EmployeeDBContext {
             e.printStackTrace();
         }
         return employees;
+    }
+
+        public Employee getEmployeeByUserId(int UserId){
+            String query = "select e.*, d.name AS department_name " + 
+                           " from Employees e" +
+                           "left join Departments d ON e.Department_id = d.id" +
+                           "where e.user_id= ?";
+            try(PreparedStatement stmt = dbContext.connection.prepareStatement(query)){
+                stmt.setInt(1,userId);
+                ResultSet rs = stmt.executeQuery();
+                if(rs.next()){
+                return new Employee (
+                    rs.getInt("id"),
+                    rs.getInt("user_id"),
+                    rs.getString("full_name"),
+                    rs.getString("email"),
+                    rs.getString("Department_name"),
+                    rs.getString("position")
+                );
+            }
+        }catch (SQLException e){
+            System.err.println("Database Error in EmployeeByUserId: " + e.getMessage());
+        }
+            return null;
     }
 }

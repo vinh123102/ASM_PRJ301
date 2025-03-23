@@ -1,4 +1,4 @@
-package LoginController;
+package Controller;
 
 import DAL.LoginDBContext;
 import User.User;

@@ -13,6 +13,13 @@ public class Employee {
     private int userId;
     private String fullName;
     private String email;
+    private String department;
+    private String position;
+
+    public Employee(int aInt, int aInt1, String department, String position, String string2, String string3) {
+        this.department = department;
+        this.position = position;
+    }
     
     public Employee(int id, int userId, String fullName, String email) {
         this.id = id;
@@ -21,6 +28,23 @@ public class Employee {
         this.email = email;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    
     public int getId() {
         return id;
     }
